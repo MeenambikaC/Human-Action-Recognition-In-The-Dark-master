@@ -1,0 +1,13 @@
+EE6222_data/
+SampleDataCollection/
+dataset/
+temp/
+statc/
+*.log
+*.aux
+*.zip
+*.gz
+*.pth   
+*.pt
+**/__pycache__
+Submission
