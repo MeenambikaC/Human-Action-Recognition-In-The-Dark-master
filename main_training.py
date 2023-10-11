@@ -41,7 +41,9 @@ df_val['path'] = str(VAL_IMG_DIR) + '/' + df_val['path'].str.replace(EXTENSION, 
 
 # df_train = df_train.iloc[:10]
 # df_val = df_val.iloc[:10]
-
+'''
+Data preparation pipeline 
+'''
 train_transforms = get_train_transforms(IMG_DIM)
 val_transforms = get_val_transforms(IMG_DIM)
 
