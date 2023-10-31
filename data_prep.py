@@ -4,16 +4,16 @@ from config.constants import (TRAIN_VID_FOLDER, TRAIN_IMG_FOLDER, TRAIN_VID_DIR,
                                 VAL_VID_FOLDER, VAL_IMG_FOLDER, VAL_VID_DIR, 
                                 EXTENSION, N_FRAMES)
 
-listOfCategories = os.listdir(TRAIN_VID_DIR)
+# listOfCategories = os.listdir(TRAIN_VID_DIR)
 
-def list_cat(train_path):
-    for cat in listOfCategories:
-        print("category:", cat)
-        path2acat = os.path.join(train_path, cat)
-        listOfSubs = os.listdir(path2acat)
-        print("number of sub-folders:", len(listOfSubs))
-        print("-"*50)
-    return 
+# def list_cat(train_path):
+#     for cat in listOfCategories:
+#         print("category:", cat)
+#         path2acat = os.path.join(train_path, cat)
+#         listOfSubs = os.listdir(path2acat)
+#         print("number of sub-folders:", len(listOfSubs))
+#         print("-"*50)
+#     return 
 
 def sv_frame(path, subfolder, subfolder_jpg):
     for root, dirs, files in os.walk(path, topdown=False):

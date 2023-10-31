@@ -99,84 +99,11 @@ def predict():
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
-    
+    check.output()
     # print(top_actions_dict,"top_actions_dict")
     return render_template('index.html', prediction=label_dict[model_pred[0]],filename=videofile.filename,top_5=top5_actions,elapsed_time=elapsed_time,accuraies_top_5=top5_elements)
     # return render_template('index.html', prediction=classification)
 code_has_run = False
-@app.route('/',methods=['POST'])
-def index():
-    check.output()
-    return render_template('index.html')
-# @app.route('/display_image/')
-# def display_image():
-#     global code_has_run
-#     # print(filename_img,'filename_img')
-#     if code_has_run:
-#         return "Code has already run"
-    
-#     code_has_run = True
-#     start_time = time.time()
-#     def process_frame(frame, body_estimation):
-#         candidate, subset = body_estimation(frame)
-#         canvas = util.draw_bodypose(frame, candidate, subset)
-#         return canvas
 
-#     body_estimation = Body('model\state_dict\openpose\\body_pose_model.pth')
-
-#     # Specify the directory path where your video files are located
-#     directory_path = 'EE6222_data/web_try/Run'
-
-#     # List all files in the specified directory
-#     file_list = os.listdir(directory_path)
-
-#     # Iterate through the list of files
-#     for filename in file_list:
-#         # Construct the full path to the video file
-#         video_path = os.path.join(directory_path, filename)
-
-#         # Get video properties
-#         cap = cv2.VideoCapture(video_path)
-#         fps = int(cap.get(cv2.CAP_PROP_FPS))
-#         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-#         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-#         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-#         middle_frame_index = frame_count // 2
-#         current_frame_index = 0
-#         output_filename = 'middle_frame.jpg'
-#         print("Frame count",frame_count)
-#         # Construct the full path to save the middle frame image
-#         output_path = os.path.join('Static', output_filename)
-#         while True:
-#             ret, frame = cap.read()
-#             if not ret:
-#                 break
-#             if current_frame_index == middle_frame_index:
-#                 processed_frame = process_frame(frame, body_estimation)
-#             # Save the processed middle frame as an image
-#                 cv2.imwrite(output_path, processed_frame)
-#                 break
-
-#             current_frame_index += 1
-
-#             # Write the processed frame to the output video
-#             # output_video.write(processed_frame)
-
-#         # Release video objects
-#         cap.release()
-#         # output_video.release()
-
-#     print("Processing complete. Output videos saved with new names.")
-
-    
-#     end_time = time.time()
-#     elapsed_time = end_time - start_time
-#     print(f"Predict function execution time: {elapsed_time} seconds")
-#     print(output_filename,'output_filename')
-
-#     # return redirect(url_for('static/img', filename=output_filename),code=301) 
-#     return send_from_directory('static/', filename_img=output_filename)
-#     # return render_template('image_display.html', filename_img=output_filename)
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
