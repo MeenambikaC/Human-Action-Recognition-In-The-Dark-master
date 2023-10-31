@@ -13,26 +13,25 @@
             <input class="btn btn-primary mt-3"type="submit" value="Predict Action" >
         </form>
 
-        <!-- {% if prediction %}
-            <p class="text-center"> Action is {{prediction}}</p>
-        {% endif %} -->
-        <!-- Check if the video_url variable exists -->
-        <!-- <form class="p-3 text-center" action='/', method="post" enctype="multipart/form-data">
-            <input class="form-control" type="file" name="videofile" >
-            <input class="btn btn-primary mt-3"type="submit" value="Predict Action" >
-        </form> -->
         {% if filename %}
         <div>
             <p class="text-center">file name is {{filename}}</p>
             <p class="text-center">Action is {{ prediction }}</p>
-            <p class="text-center">Top -5 actions are {{top_5}}</p>
-            <!-- Embed the video using the video_url variable -->
-            <script src="https://vjs.zencdn.net/7.12.4/video.js"></script>
-            <video width="320" height="240" controls>
-                <source src="{{url_for('display_video',filename=filename)}}" mimetype="video/mp4; codecs='avc1.64001e'">
-                
-                Your browser does not support the video tag.
-            </video>
+            
+            <p class="text-center">Top-5 actions:</p>
+            {% for item in data %}
+                <p class="text-center">{{ item[0] }}: {{ item[1] }}</p>
+            {% endfor %}
+            <p class="text-center">Top-5 actions: {{ top_5|join(", ") }}</p>
+            <p class="text-center">Top-5 actions: {{ accuraies_top_5|join(", ") }}</p>
+            <p class="text-center">Time delay for the prediction is {{ "{:.2f}".format(elapsed_time)}} seconds</p>
+
+            
+            
+            <img src="{{ url_for('static',filename='middle_frame.jpg') }}" alt="Displayed Image">
+            
+
+            
         </div>
         {% endif %}
 
