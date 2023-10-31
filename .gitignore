@@ -11,3 +11,4 @@ statc/
 *.pt
 **/__pycache__
 Submission
+venv/
