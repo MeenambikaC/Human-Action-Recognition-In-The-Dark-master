@@ -118,7 +118,7 @@ def predict():
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
-
+    check.output(video_path)
     # print(top_actions_dict,"top_actions_dict")
     return render_template(
         "index.html",
@@ -129,15 +129,6 @@ def predict():
         accuraies_top_5=top5_elements,
     )
     # return render_template('index.html', prediction=classification)
-
-
-code_has_run = False
-
-
-@app.route("/", methods=["POST"])
-def index():
-    check.output()
-    return render_template("index.html")
 
 
 # @app.route('/display_image/')
