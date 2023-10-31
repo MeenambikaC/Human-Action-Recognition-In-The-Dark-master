@@ -21,6 +21,20 @@ import numpy as np
 import check
 import tempfile
 
+label_dict = {
+    0: "Drink",
+    1: "Jump",
+    2: "Pick",
+    3: "Pour",
+    4: "Push",
+    5: "Run",
+    6: "Sit",
+    7: "Stand",
+    8: "Turn",
+    9: "Walk",
+    10: "Wave",
+}
+
 # from tensorflow import keras
 app = Flask(__name__, static_url_path="/static")
 # app = Flask(__name__)
@@ -43,13 +57,13 @@ def predict():
     videofile.save(video_path)
     print(video_path)
     print("hi")
-    # sv_frame("EE6222_data/web_try", "web_try", "web_img_try")
-    # df_test = pd.read_csv("EE6222_data/web_try.txt", sep="\t", header=None, index_col=0)
-    # df_test.columns = ["label", "path"]
-    # df_test["path"] = (
-    #     str("EE6222_data/web_img_try") + "/" + df_test["path"].str.replace(".mp4", "")
-    # )
-    # print(df_test.head())
+    sv_frame("EE6222_data/web_try", "web_try", "web_img_try")
+    df_test = pd.read_csv("EE6222_data/web_try.txt", sep="\t", header=None, index_col=0)
+    df_test.columns = ["label", "path"]
+    df_test["path"] = (
+        str("EE6222_data/web_img_try") + "/" + df_test["path"].str.replace(".mp4", "")
+    )
+    print(df_test.head())
 
     inf_transforms = get_val_transforms(IMG_DIM)
     inf_data = VideoDataset(df=df_test, transforms=inf_transforms, labelAvailable=True)
@@ -78,19 +92,6 @@ def predict():
 
     for i, model_result in overall_results.items():
         model_folder, model_logits, model_pred, model_target, model_loss = model_result
-        label_dict = {
-            0: "Drink",
-            1: "Jump",
-            2: "Pick",
-            3: "Pour",
-            4: "Push",
-            5: "Run",
-            6: "Sit",
-            7: "Stand",
-            8: "Turn",
-            9: "Walk",
-            10: "Wave",
-        }
         print(label_dict[model_pred[0]])
         predictions = pd.Series(label_dict[model_pred[0]], name="prediction")
         predictions.to_csv(SUBMISSION_DIR / "vr-web.txt", sep="\t", header=False)

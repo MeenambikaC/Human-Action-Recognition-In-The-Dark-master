@@ -2,38 +2,38 @@ from pathlib import Path
 import os
 
 
-DATA_DIR  = Path('SampleDataCollection')
+DATA_DIR = Path("SampleDataCollection")
 
-MODEL_NAME = 'resnet18' # For CNN-RNN only
-MODEL_TYPE = 'r2plus1d_18' # 'cnn-rnn', 'r3d_18', 'r2plus1d_18'
-IMG_SHAPE = 'BCTHW' #'BCTHW', 'BTCHW'
-#SAVED_WEIGHTS_DIR = '/kaggle/input/openpose-r21d-model-state-dict-221027/best_val_loss (1).pt'
-PRETRAINED = Path('model/state_dict')
-CHECKPOINT_DIR = PRETRAINED / 'checkpoint'
-MODEL_STATE_DIR = PRETRAINED / 'bestloss'
-OPENPOSE_STATE_DIR = PRETRAINED / 'openpose/body_pose_model.pth'
+MODEL_NAME = "resnet18"  # For CNN-RNN only
+MODEL_TYPE = "r2plus1d_18"  # 'cnn-rnn', 'r3d_18', 'r2plus1d_18'
+IMG_SHAPE = "BCTHW"  #'BCTHW', 'BTCHW'
+# SAVED_WEIGHTS_DIR = '/kaggle/input/openpose-r21d-model-state-dict-221027/best_val_loss (1).pt'
+PRETRAINED = Path("model/state_dict")
+CHECKPOINT_DIR = PRETRAINED / "checkpoint"
+MODEL_STATE_DIR = PRETRAINED / "bestloss"
+OPENPOSE_STATE_DIR = PRETRAINED / "openpose/body_pose_model.pth"
 # D:\Fifth Semester\DSE Project\Human-Action-Recognition-In-The-Dark-master\model\state_dict\bestloss
-SUBMISSION_DIR = Path('Submission')
+SUBMISSION_DIR = Path("Submission")
 
-TRAIN_VID_FOLDER = 'train'
-TRAIN_IMG_FOLDER = 'train_img'
+TRAIN_VID_FOLDER = "train"
+TRAIN_IMG_FOLDER = "train_img"
 TRAIN_VID_DIR = DATA_DIR / TRAIN_VID_FOLDER
 TRAIN_IMG_DIR = DATA_DIR / TRAIN_IMG_FOLDER
-TRAIN_CSV = DATA_DIR / 'train.txt'
+TRAIN_CSV = DATA_DIR / "train.txt"
 
-VAL_VID_FOLDER = 'validate'
-VAL_IMG_FOLDER = 'validate_img'
+VAL_VID_FOLDER = "validate"
+VAL_IMG_FOLDER = "validate_img"
 VAL_VID_DIR = DATA_DIR / VAL_VID_FOLDER
 VAL_IMG_DIR = DATA_DIR / VAL_IMG_FOLDER
-VAL_CSV = DATA_DIR / 'validate.txt'
+VAL_CSV = DATA_DIR / "validate.txt"
 
-INF_VID_FOLDER = 'test'
-INF_IMG_FOLDER = 'test_img'
+INF_VID_FOLDER = "test"
+INF_IMG_FOLDER = "test_img"
 INF_VID_DIR = DATA_DIR / INF_VID_FOLDER
 INF_IMG_DIR = DATA_DIR / INF_IMG_FOLDER
-INF_CSV = DATA_DIR / 'test.txt'
+INF_CSV = DATA_DIR / "test.txt"
 
-MAP_TABLE_DIR = DATA_DIR / 'mapping_table.txt'
+MAP_TABLE_DIR = DATA_DIR / "mapping_table.txt"
 NUM_CLASSES = 11
 
 EXTENSION = ".mp4"
@@ -56,14 +56,9 @@ TRAIN_BATCH_SIZE = 8
 VAL_BATCH_SIZE = 1 * TRAIN_BATCH_SIZE
 TEST_BATCH_SIZE = VAL_BATCH_SIZE
 
-LR = 1e-4 # 1e-3
-NUM_EPOCHS = 2#20
-NUM_WARMUP_EPOCHS = 1#5
-NUM_COS_CYCLE = 0.4 # 0.5
+LR = 1e-4  # 1e-3
+NUM_EPOCHS = 2  # 20
+NUM_WARMUP_EPOCHS = 1  # 5
+NUM_COS_CYCLE = 0.4  # 0.5
 
 TOP_K = 5
-
-
-
-
-
