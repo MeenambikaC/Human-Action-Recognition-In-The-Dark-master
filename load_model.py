@@ -3,7 +3,15 @@ import torch.nn as nn
 from torchvision.models.video import r2plus1d_18
 import torchvision.transforms as transforms
 from model.data import get_val_transforms, collate_fn, VideoDataset
-from config.constants import IMG_DIM,TEST_BATCH_SIZE,MODEL_TYPE,MODEL_STATE_DIR,NUM_CLASSES,TOP_K,SUBMISSION_DIR
+from config.constants import (
+    IMG_DIM,
+    TEST_BATCH_SIZE,
+    MODEL_TYPE,
+    MODEL_STATE_DIR,
+    NUM_CLASSES,
+    TOP_K,
+    SUBMISSION_DIR,
+)
 from torch.utils.data import DataLoader
 import pandas as pd
 from data_prep import sv_frame
@@ -15,65 +23,90 @@ from model.openpose_pytorch.src.model import bodypose_model
 from model.openpose_pytorch.src.body import Body
 import numpy as np
 from sklearn.metrics import accuracy_score, top_k_accuracy_score, confusion_matrix
+
 # from tensorflow import keras
-print('hi')
-sv_frame('EE6222_data/web_try', 'web_try', 'web_img_try')
-df_test = pd.read_csv('EE6222_data/web_try.txt', sep="\t", header=None, index_col=0)
-df_test.columns = ['label', 'path']
-df_test['path'] = str('EE6222_data/web_img_try') + '/' + df_test['path'].str.replace('.mp4', "")
+print("hi")
+sv_frame("EE6222_data/web_try", "web_try", "web_img_try")
+df_test = pd.read_csv("EE6222_data/web_try.txt", sep="\t", header=None, index_col=0)
+df_test.columns = ["label", "path"]
+df_test["path"] = (
+    str("EE6222_data/web_img_try") + "/" + df_test["path"].str.replace(".mp4", "")
+)
 print(df_test.head())
 
 inf_transforms = get_val_transforms(IMG_DIM)
-inf_data = VideoDataset(df=df_test,
-                          transforms=inf_transforms, 
-                          labelAvailable=True)
-inf_loader  = DataLoader(inf_data, 
-                         batch_size=TEST_BATCH_SIZE,
-                         shuffle=False, 
-                         collate_fn=collate_fn)
+inf_data = VideoDataset(df=df_test, transforms=inf_transforms, labelAvailable=True)
+inf_loader = DataLoader(
+    inf_data, batch_size=TEST_BATCH_SIZE, shuffle=False, collate_fn=collate_fn
+)
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-if MODEL_TYPE == 'r2plus1d_18':
-    print("r2plus1d_18",'here')
+device = "cuda" if torch.cuda.is_available() else "cpu"
+if MODEL_TYPE == "r2plus1d_18":
+    print("r2plus1d_18", "here")
     model = r2plus1d_18(weights=None, progress=False)
     num_features = model.fc.in_features
-    print(num_features,"Num_of_features")
+    print(num_features, "Num_of_features")
     model.fc = nn.Linear(num_features, NUM_CLASSES)
 # print(MODEL_STATE_DIR,'MODEL_STATE_DIR')
 # model_paths = sorted(list(MODEL_STATE_DIR.glob('be8ab2*')))
-label_dict = {0: 'Drink', 1: 'Jump', 2: 'Pick', 3: 'Pour', 4: 'Push', 5: 'Run', 6: 'Sit', 7: 'Stand', 8: 'Turn', 9: 'Walk',10:'Wave'}
-model_paths = sorted(list(MODEL_STATE_DIR.glob('best_val_loss*')))
-print(model_paths,'model_paths')
+label_dict = {
+    0: "Drink",
+    1: "Jump",
+    2: "Pick",
+    3: "Pour",
+    4: "Push",
+    5: "Run",
+    6: "Sit",
+    7: "Stand",
+    8: "Turn",
+    9: "Walk",
+    10: "Wave",
+}
+model_paths = sorted(list(MODEL_STATE_DIR.glob("best_val_loss*")))
+print(model_paths, "model_paths")
 overall_results = dict()
-print(overall_results,'overall_results')
+print(overall_results, "overall_results")
 
 
 for m in range(len(model_paths)):
-
     model_path = model_paths[m]
 
     overall_results[m] = inference_loop(model, model_path, inf_loader, device)
 
 
 for i, model_result in overall_results.items():
-    model_folder, model_logits, model_pred, model_target, model_loss = model_result 
+    model_folder, model_logits, model_pred, model_target, model_loss = model_result
     # label_dict={0: 'Drink', 1: 'Jump', 2: 'Pick', 3: 'Pour', 4: 'Push', 5: 'Run', 6: 'Sit', 7: 'Stand', 8: 'Turn', 9: 'Walk',10:'Wave'}
-    label_dict = {0: 'Drink', 1: 'Jump', 2: 'Pick', 3: 'Pour', 4: 'Push', 5: 'Run', 6: 'Sit', 7: 'Stand', 8: 'Turn', 9: 'Walk',10:'Wave'}
+    label_dict = {
+        0: "Drink",
+        1: "Jump",
+        2: "Pick",
+        3: "Pour",
+        4: "Push",
+        5: "Run",
+        6: "Sit",
+        7: "Stand",
+        8: "Turn",
+        9: "Walk",
+        10: "Wave",
+    }
     print(label_dict[model_pred[0]])
     model_logits = np.array(model_logits)
 
-    predictions=pd.Series(label_dict[model_pred[0]], name='prediction')
+    predictions = pd.Series(label_dict[model_pred[0]], name="prediction")
     # predictions.to_csv(SUBMISSION_DIR / 'vr-1.txt', sep='\t', header=False)
     # model_top5_score = top_k_accuracy_score(model_target, model_logits, k=5)
-    
+
     # Get the top 5 predicted class indices for each sample
     top5_indices = model_logits.argsort(axis=1)[:, -5:]
-    
+
     # Map the class indices to action labels
-    top5_actions = [[label_dict[idx] for idx in sample_indices] for sample_indices in top5_indices]
-    
+    top5_actions = [
+        [label_dict[idx] for idx in sample_indices] for sample_indices in top5_indices
+    ]
+
     # print(f'Model Top-5 accuracy score: {model_top5_score}')
-    print(f'Top-5 predicted actions:')
+    print(f"Top-5 predicted actions:")
     for actions in top5_actions:
         print(actions)
 
@@ -126,30 +159,6 @@ for i, model_result in overall_results.items():
 #         output_video.release()
 
 #     print("Processing complete. Output videos saved with new names.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # # Define the configuration for the model

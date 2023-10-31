@@ -12,3 +12,4 @@ statc/
 **/__pycache__
 Submission
 venv/
+dataset/
