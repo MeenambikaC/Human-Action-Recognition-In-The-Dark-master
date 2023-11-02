@@ -29,6 +29,19 @@ def hello_word():
 
 @app.route('/', methods=['POST'])
 def predict():
+    label_dict = {
+    0: "Drink",
+    1: "Jump",
+    2: "Pick",
+    3: "Pour",
+    4: "Push",
+    5: "Run",
+    6: "Sit",
+    7: "Stand",
+    8: "Turn",
+    9: "Walk",
+    10: "Wave",
+}
     start_time = time.time()
     videofileold = request.files['videofile']
     video_path = "EE6222_data/web_try/Run/" + videofileold.filename
@@ -78,38 +91,47 @@ def predict():
 
 
     for i, model_result in overall_results.items():
-        model_folder, model_logits, model_pred, model_target, model_loss = model_result 
-        label_dict={0: 'Drink', 1: 'Jump', 2: 'Pick', 3: 'Pour', 4: 'Push', 5: 'Run', 6: 'Sit', 7: 'Stand', 8: 'Turn', 9: 'Walk',10:'Wave'}
-        # print(label_dict[model_pred[0]])
-        predictions=pd.Series(label_dict[model_pred[0]], name='prediction')
-        predictions.to_csv(SUBMISSION_DIR / 'vr-web.txt', sep='\t', header=False)
+        model_folder, model_logits, model_pred, model_target, model_loss = model_result
+        print(label_dict[model_pred[0]])
+        predictions = pd.Series(label_dict[model_pred[0]], name="prediction")
+        predictions.to_csv(SUBMISSION_DIR / "vr-web.txt", sep="\t", header=False)
         model_logits = np.array(model_logits)
-        print(np.max(model_logits[0]))
+        # print(np.max(model_logits[0]))
         print(np.max(model_logits[0])<0.5)
-        is_odd=np.max(model_logits[0])<0.5
+        is_odd=np.max(model_logits[0])<0.3
         # Use argsort to get the indices of the top 5 values
         top5_indices = model_logits.argsort()[-5:][::-1]
         arr = np.array(model_logits)
         top5_indices = arr.argsort()[0][-5:][::-1]
         top5_elements = arr[0][top5_indices].tolist()
-        # print(top5_elements, 'ele')
+        print(top5_elements, "ele")
 
         # print(model_logits,top5_indices)
         top5_indices = model_logits.argsort(axis=1)[:, -5:]
         top5 = model_logits.argsort(axis=0)[:, -5:]
         # Map the class indices to action labels
-        top5_actions = [[label_dict[idx] for idx in sample_indices] for sample_indices in top5_indices]
-        top5_actions=top5_actions[0][::-1]
-        # print(top5_actions,top5)
+        top5_actions = [
+            [label_dict[idx] for idx in sample_indices]
+            for sample_indices in top5_indices
+        ]
+        top5_actions = top5_actions[0][::-1]
+        print(top5_actions, top5)
 
-
-    # print(videofile.filename)
+    print(videofile.filename)
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
     check.output()
     # print(top_actions_dict,"top_actions_dict")
-    return render_template('index.html', prediction=label_dict[model_pred[0]],filename=videofile.filename,top_5=top5_actions,elapsed_time=elapsed_time,accuraies_top_5=top5_elements,is_odd=is_odd)
+    return render_template(
+        "index.html",
+        prediction=label_dict[model_pred[0]],
+        filename=videofile.filename,
+        top_5=top5_actions,
+        elapsed_time=elapsed_time,
+        accuraies_top_5=top5_elements,
+        is_odd=is_odd
+    )
     # return render_template('index.html', prediction=classification)
 # code_has_run = False
 

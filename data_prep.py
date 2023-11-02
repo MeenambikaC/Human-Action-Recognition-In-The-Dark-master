@@ -4,7 +4,7 @@ from config.constants import (TRAIN_VID_FOLDER, TRAIN_IMG_FOLDER, TRAIN_VID_DIR,
                                 VAL_VID_FOLDER, VAL_IMG_FOLDER, VAL_VID_DIR, 
                                 EXTENSION, N_FRAMES)
 
-# listOfCategories = os.listdir(TRAIN_VID_DIR)
+listOfCategories = os.listdir(TRAIN_VID_DIR)
 
 # def list_cat(train_path):
 #     for cat in listOfCategories:

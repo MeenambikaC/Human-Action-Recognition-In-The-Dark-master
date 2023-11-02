@@ -15,26 +15,31 @@
 
         {% if filename %}
         <div>
-            <p class="text-center">file name is {{filename}}</p>
-            <p class="text-center">Action is {{ prediction }}</p>
             {% if is_odd %}
-                 <p class="text-center">Error: Odd class detected.</p>
+                <p class="text-center">Out of Detection...</p>
             {% else %}
-                <p class="text-center">Top-5 actions:</p>
-                {% for item in data %}
-                    <p class="text-center">{{ item[0] }}: {{ item[1] }}</p>
-                {% endfor %}
-                <p class="text-center">Top-5 actions: {{ top_5|join(", ") }}</p>
-                <p class="text-center">Top-5 actions: {{ accuraies_top_5|join(", ") }}</p>
-                <p class="text-center">Time delay for the prediction is {{ "{:.2f}".format(elapsed_time)}} seconds</p>
+                <p class="text-center">file name is {{filename}}</p>
+                <p class="text-center">Action is {{ prediction }}</p>
 
-                
-                
-                <img src="{{ url_for('static',filename='middle_frame.jpg') }}" alt="Displayed Image">
-            
+                    <p class="text-center">Top-5 actions:</p>
+                    {% for item in data %}
+                        <p class="text-center">{{ item[0] }}: {{ item[1] }}</p>
+                    {% endfor %}
+                    <p class="text-center">Top-5 actions: {{ top_5|join(", ") }}</p>
+                    <!-- <p class="text-center">Top-5 actions: {{ accuraies_top_5|join(", ") }}</p> -->
+                    <p class="text-center">Top-5 actions: 
+                        {% for item in accuraies_top_5 %}
+                            {{ "%.2f"|format(item) }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p class="text-center">Time delay for the prediction is {{ "{:.2f}".format(elapsed_time)}} seconds</p>
+
+                    <img src="{{ url_for('static',filename='middle_frame.jpg') }}" alt="Displayed Image">
             {% endif %}
+    
             
-        </div>
+            </div>
         {% endif %}
 
     </body>
