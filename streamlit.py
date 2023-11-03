@@ -40,12 +40,12 @@ if uploaded_file is not None:
 
             # Display predicted action in a larger font size
             st.markdown(
-                f"<p>Action Prediction</p><br><h1 style='text-align: center; color: red;'>{class_belong}</h1>",
+                f"<center><p>Action Prediction</p><br><h1 style='text-align: center; color: red;'>{class_belong}</h1></center>",
                 unsafe_allow_html=True,
             )
             # Display predicted action in a larger font size
             st.markdown(
-                f"<p>Confidence</p><br><h4 style='text-align: center; color: red;'>{round(val*100,2)}%</h4>",
+                f"<center><p>Confidence</p><br><h4 style='text-align: center; color: red;'>{round(val*100,2)}%</h4></center>",
                 unsafe_allow_html=True,
             )
             st.write(f"Time delay for the prediction: {elapsed_time:.2f} seconds")
