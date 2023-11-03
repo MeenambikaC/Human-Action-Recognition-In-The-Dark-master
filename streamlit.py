@@ -58,10 +58,11 @@ if uploaded_file is not None:
                 os.remove(image_path)
                 print(f"Deleted existing file: {image_path}")
 
-            check.output(uploaded_file.name)
+            time_taken = check.output(uploaded_file.name)
 
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
+                st.write(f"Time to generate video: {time_taken} seconds")
 
 
 # Function to create a gauge chart
