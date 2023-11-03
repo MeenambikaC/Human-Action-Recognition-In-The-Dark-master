@@ -64,6 +64,19 @@ if uploaded_file is not None:
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
                 st.write(f"Time to generate video: {time_taken} seconds")
 
+            video_path = f"{uploaded_file.name}_output.mp4"
+
+            # Check if the middle_frame.jpg exists and delete it if it does
+            if os.path.exists("temp/" + video_path):
+                os.remove(video_path)
+                print(f"Deleted existing file: {video_path}")
+
+            time_taken = check.output(video_path)
+
+            if os.path.exists(video_path):
+                st.video(video_path, caption="Processed Video", use_column_width=True)
+                st.write(f"Time to generate video: {time_taken} seconds")
+
 
 # Function to create a gauge chart
 def render_gauge(score):
