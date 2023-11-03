@@ -78,6 +78,7 @@ def output(filename):
 
             # Save the processed middle frame as an image
             cv2.imwrite(output_path, processed_frame)
+            print("saved file")
             break
 
         current_frame_index += 1
