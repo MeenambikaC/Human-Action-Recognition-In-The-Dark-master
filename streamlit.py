@@ -41,9 +41,15 @@ if uploaded_file is not None:
             st.write(f"Accuracy Score: {val}")
             st.write(f"Time delay for the prediction: {elapsed_time:.2f} seconds")
 
-            check.output(uploaded_file.name)
-
             # You may need additional logic to display the 'middle_frame.jpg' as well
             image_path = os.path.join("static", "middle_frame.jpg")
+
+            # Check if the middle_frame.jpg exists and delete it if it does
+            if os.path.exists(image_path):
+                os.remove(image_path)
+                print(f"Deleted existing file: {image_path}")
+
+            check.output(uploaded_file.name)
+
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)

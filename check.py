@@ -69,11 +69,6 @@ def output(filename):
     # Construct the full path to save the middle frame image
     output_path = os.path.join("Static", output_filename)
 
-    # Check if the middle_frame.jpg exists and delete it if it does
-    if os.path.exists(output_path):
-        os.remove(output_path)
-        print(f"Deleted existing file: {output_path}")
-
     while True:
         ret, frame = cap.read()
         if not ret:
