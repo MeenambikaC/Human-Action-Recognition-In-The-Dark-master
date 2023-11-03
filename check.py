@@ -73,6 +73,11 @@ def output(filename):
             break
         if current_frame_index == middle_frame_index:
             processed_frame = process_frame(frame, body_estimation)
+            # Check if the middle_frame.jpg exists and delete it if it does
+            if os.path.exists(output_path):
+                os.remove(output_path)
+                print(f"Deleted existing file: {output_path}")
+
             # Save the processed middle frame as an image
             cv2.imwrite(output_path, processed_frame)
             break
