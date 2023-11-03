@@ -1,0 +1,33 @@
+[browser]
+
+# Internet address where users should point their browsers in order to
+# connect to the app. Can be IP address or DNS name and path.
+# This is used to:
+# - Set the correct URL for CORS and XSRF protection purposes.
+# - Show the URL on the terminal
+# - Open the browser
+# Default: "localhost"
+serverAddress = "arid.chamaru.me"
+
+# Whether to send usage statistics to Streamlit.
+# Default: true
+gatherUsageStats = true
+
+
+
+
+
+
+
+[logger]
+
+# Level of logging: 'error', 'warning', 'info', or 'debug'.
+# Default: 'info'
+level = "info"
+
+# String format for logging messages. If logger.datetimeFormat is set,
+# logger messages will default to `%(asctime)s.%(msecs)03d %(message)s`. See
+# Python's documentation for available attributes:
+# https://docs.python.org/2.6/library/logging.html#formatter-objects
+# Default: "%(asctime)s %(message)s"
+messageFormat = "%(asctime)s %(message)s"
