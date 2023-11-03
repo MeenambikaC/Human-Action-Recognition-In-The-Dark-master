@@ -8,6 +8,22 @@ import check
 UPLOAD_DIRECTORY = "temp"
 
 
+# Function to create a gauge chart
+def render_gauge(score):
+    option = {
+        "tooltip": {"formatter": "{a} <br/>{b} : {c}%"},
+        "series": [
+            {
+                "name": "Accuracy",
+                "type": "gauge",
+                "detail": {"formatter": "{value}%"},
+                "data": [{"value": score, "name": "Accuracy Score"}],
+            }
+        ],
+    }
+    st_echarts(options=option, height="200px")
+
+
 def save_uploaded_file(uploaded_file):
     try:
         path = os.path.join(UPLOAD_DIRECTORY, uploaded_file.name)
@@ -60,19 +76,3 @@ if uploaded_file is not None:
 
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
-
-
-# Function to create a gauge chart
-def render_gauge(score):
-    option = {
-        "tooltip": {"formatter": "{a} <br/>{b} : {c}%"},
-        "series": [
-            {
-                "name": "Accuracy",
-                "type": "gauge",
-                "detail": {"formatter": "{value}%"},
-                "data": [{"value": score, "name": "Accuracy Score"}],
-            }
-        ],
-    }
-    st_echarts(options=option, height="200px")
