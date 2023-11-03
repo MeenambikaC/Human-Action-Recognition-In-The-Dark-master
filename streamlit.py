@@ -3,26 +3,9 @@ import os
 import new
 import time
 import check
-from streamlit_echarts import st_echarts
 
 # Constants
 UPLOAD_DIRECTORY = "temp"
-
-
-# Function to create a gauge chart
-def render_gauge(score):
-    option = {
-        "tooltip": {"formatter": "{a} <br/>{b} : {c}%"},
-        "series": [
-            {
-                "name": "Accuracy",
-                "type": "gauge",
-                "detail": {"formatter": "{value}%"},
-                "data": [{"value": score, "name": "Accuracy Score"}],
-            }
-        ],
-    }
-    st_echarts(options=option, height="200px")
 
 
 def save_uploaded_file(uploaded_file):
@@ -57,12 +40,14 @@ if uploaded_file is not None:
 
             # Display predicted action in a larger font size
             st.markdown(
-                f"<h1 style='text-align: center; color: red;'>{class_belong}</h1>",
+                f"<p>Action Prediction</p><br><h1 style='text-align: center; color: red;'>{class_belong}</h1>",
                 unsafe_allow_html=True,
             )
-
-            # Render gauge chart for the accuracy score
-            render_gauge(val * 100)  # Assuming val is a fraction like 0.93
+            # Display predicted action in a larger font size
+            st.markdown(
+                f"<p>Confidence</p><br><h4 style='text-align: center; color: red;'>{round(val*100,2)}%</h4>",
+                unsafe_allow_html=True,
+            )
             st.write(f"Time delay for the prediction: {elapsed_time:.2f} seconds")
 
             # You may need additional logic to display the 'middle_frame.jpg' as well
@@ -77,3 +62,19 @@ if uploaded_file is not None:
 
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
+
+
+# Function to create a gauge chart
+def render_gauge(score):
+    option = {
+        "tooltip": {"formatter": "{a} <br/>{b} : {c}%"},
+        "series": [
+            {
+                "name": "Accuracy",
+                "type": "gauge",
+                "detail": {"formatter": "{value}%"},
+                "data": [{"value": score, "name": "Accuracy Score"}],
+            }
+        ],
+    }
+    st_echarts(options=option, height="200px")
