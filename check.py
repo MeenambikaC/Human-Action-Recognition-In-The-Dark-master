@@ -65,18 +65,21 @@ def output(filename):
     current_frame_index = 0
     output_filename = "middle_frame.jpg"
     print("Frame count", frame_count)
+
     # Construct the full path to save the middle frame image
     output_path = os.path.join("Static", output_filename)
+
+    # Check if the middle_frame.jpg exists and delete it if it does
+    if os.path.exists(output_path):
+        os.remove(output_path)
+        print(f"Deleted existing file: {output_path}")
+
     while True:
         ret, frame = cap.read()
         if not ret:
             break
         if current_frame_index == middle_frame_index:
             processed_frame = process_frame(frame, body_estimation)
-            # Check if the middle_frame.jpg exists and delete it if it does
-            if os.path.exists(output_path):
-                os.remove(output_path)
-                print(f"Deleted existing file: {output_path}")
 
             # Save the processed middle frame as an image
             cv2.imwrite(output_path, processed_frame)
@@ -96,4 +99,3 @@ def output(filename):
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
-    print(output_filename, "output_filename")
