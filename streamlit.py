@@ -62,7 +62,7 @@ if uploaded_file is not None:
 
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
-                st.write(f"Time to generate video: {time_taken} seconds")
+                st.write(f"Time to generate frame: {time_taken} seconds")
 
             video_path = f"{uploaded_file.name}_output.mp4"
 
@@ -73,8 +73,12 @@ if uploaded_file is not None:
 
             time_taken = check.output(video_path)
 
-            if os.path.exists(video_path):
-                st.video(video_path, caption="Processed Video", use_column_width=True)
+            if os.path.exists("temp/" + video_path):
+                st.video(
+                    "temp/" + video_path,
+                    caption="Processed Video",
+                    use_column_width=True,
+                )
                 st.write(f"Time to generate video: {time_taken} seconds")
 
 
