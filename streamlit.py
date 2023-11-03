@@ -29,7 +29,7 @@ if uploaded_file is not None:
 
     if st.button("Predict Action"):
         video_path = save_uploaded_file(uploaded_file)
-
+        print(video_path)
         if video_path:
             start_time = time.time()
             class_belong, val = new.predict_single_action(video_path, 11)

@@ -47,7 +47,7 @@ def output(filename):
     directory_path = "temp/"
 
     # List all files in the specified directory
-    file_list = os.listdir(directory_path)
+    # file_list = os.listdir(directory_path)
 
     # Iterate through the list of files
 
