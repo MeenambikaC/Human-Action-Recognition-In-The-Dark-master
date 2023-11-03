@@ -66,7 +66,7 @@ def output(filename):
     output_filename = "middle_frame.jpg"
     print("Frame count", frame_count)
     # Construct the full path to save the middle frame image
-    output_path = os.path.join("Static", output_filename)
+    output_path = os.path.join("temp", output_filename)
     while True:
         ret, frame = cap.read()
         if not ret:

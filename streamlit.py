@@ -42,7 +42,7 @@ if uploaded_file is not None:
             st.write(f"Time delay for the prediction: {elapsed_time:.2f} seconds")
 
             # You may need additional logic to display the 'middle_frame.jpg' as well
-            image_path = os.path.join("static", "middle_frame.jpg")
+            image_path = os.path.join("temp", "middle_frame.jpg")
 
             # Check if the middle_frame.jpg exists and delete it if it does
             if os.path.exists(image_path):
