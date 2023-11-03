@@ -92,4 +92,3 @@ def output(filename):
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
     print(output_filename, "output_filename")
-    return elapsed_time
