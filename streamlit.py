@@ -3,6 +3,7 @@ import os
 import new
 import time
 import check
+from streamlit_echarts import st_echarts
 
 # Constants
 UPLOAD_DIRECTORY = "temp"
