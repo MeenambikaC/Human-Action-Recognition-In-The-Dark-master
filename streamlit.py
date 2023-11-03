@@ -27,7 +27,7 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     st.write("File successfully uploaded.")
 
-    if st.button("Predict Action"):
+    with st.spinner("Predicting... Please wait."):
         video_path = save_uploaded_file(uploaded_file)
         print(video_path)
         if video_path:
@@ -37,8 +37,15 @@ if uploaded_file is not None:
             elapsed_time = end_time - start_time
 
             st.write(f"File Name: {uploaded_file.name}")
-            st.write(f"Action Predicted: {class_belong}")
-            st.write(f"Accuracy Score: {val}")
+
+            # Display predicted action in a larger font size
+            st.markdown(
+                f"<h1 style='text-align: center; color: red;'>{class_belong}</h1>",
+                unsafe_allow_html=True,
+            )
+
+            # Render gauge chart for the accuracy score
+            render_gauge(val * 100)  # Assuming val is a fraction like 0.93
             st.write(f"Time delay for the prediction: {elapsed_time:.2f} seconds")
 
             # You may need additional logic to display the 'middle_frame.jpg' as well
@@ -53,3 +60,19 @@ if uploaded_file is not None:
 
             if os.path.exists(image_path):
                 st.image(image_path, caption="Processed Frame", use_column_width=True)
+
+
+# Function to create a gauge chart
+def render_gauge(score):
+    option = {
+        "tooltip": {"formatter": "{a} <br/>{b} : {c}%"},
+        "series": [
+            {
+                "name": "Accuracy",
+                "type": "gauge",
+                "detail": {"formatter": "{value}%"},
+                "data": [{"value": score, "name": "Accuracy Score"}],
+            }
+        ],
+    }
+    st_echarts(options=option, height="200px")
