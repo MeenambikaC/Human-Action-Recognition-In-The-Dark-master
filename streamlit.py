@@ -40,7 +40,7 @@ if uploaded_file is not None:
 
             # Display predicted action in a larger font size
             st.markdown(
-                f"<center><p>Action Prediction</p><h1 style='text-align: center; color: red;'>{class_belong}</h1></center>",
+                f"<center><p>Action Prediction</p><h1 style='text-align: center; color: red;'>{class_belong}</h1></center><br><br>",
                 unsafe_allow_html=True,
             )
             # Display predicted action in a larger font size
