@@ -47,7 +47,7 @@ def output(filename):
     directory_path = "temp/"
 
     # List all files in the specified directory
-    # file_list = os.listdir(directory_path)
+    file_list = os.listdir(directory_path)
 
     # Iterate through the list of files
 
@@ -65,20 +65,16 @@ def output(filename):
     current_frame_index = 0
     output_filename = "middle_frame.jpg"
     print("Frame count", frame_count)
-
     # Construct the full path to save the middle frame image
     output_path = os.path.join("Static", output_filename)
-
     while True:
         ret, frame = cap.read()
         if not ret:
             break
         if current_frame_index == middle_frame_index:
             processed_frame = process_frame(frame, body_estimation)
-
             # Save the processed middle frame as an image
             cv2.imwrite(output_path, processed_frame)
-            print("saved file")
             break
 
         current_frame_index += 1
@@ -95,3 +91,4 @@ def output(filename):
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Predict function execution time: {elapsed_time} seconds")
+    print(output_filename, "output_filename")
